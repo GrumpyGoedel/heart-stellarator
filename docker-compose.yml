@@ -1,0 +1,38 @@
+services:
+  plasma-coils:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: plasma-coils:latest
+    container_name: plasma-coils
+    # Bind-mount the working dir so the script's PNG outputs land back on the host
+    # and edits to simple_plasma_coils.py take effect without rebuilding the image.
+    volumes:
+      - ./:/work
+    working_dir: /work
+    environment:
+      MPLBACKEND: Agg
+      OMP_NUM_THREADS: "4"
+    command: ["python", "/work/simple_plasma_coils.py"]
+
+  heart-stellarator:
+    image: plasma-coils:latest
+    container_name: heart-stellarator
+    volumes:
+      - ./:/work
+    working_dir: /work
+    environment:
+      MPLBACKEND: Agg
+      OMP_NUM_THREADS: "4"
+    command: ["python", "/work/heart_stellarator.py"]
+
+  heart-gif:
+    image: plasma-coils:latest
+    container_name: heart-gif
+    volumes:
+      - ./:/work
+    working_dir: /work
+    environment:
+      MPLBACKEND: Agg
+      OMP_NUM_THREADS: "4"
+    command: ["python", "/work/heart_stellarator_gif.py"]

@@ -2,7 +2,7 @@
 
 A stellarator with the cross section of a heart.
 
-![Heart stellarator — rotating view](heart_stellarator.gif)
+![Heart stellarator — 3-D view with cut-away](heart_stellarator.png)
 
 The plasma boundary's poloidal cross-section traces the classical
 parametric heart curve
@@ -22,24 +22,22 @@ optimized against the surface with L-BFGS-B until `⟨|B·n|/|B|⟩ ≈ 1%`.
 
 ## Result
 
-| | |
-|---|---|
-| ![3-D view with cut-away](heart_stellarator.png) | ![Cross-sections](heart_cross_sections.png) |
+![Heart stellarator — rotating view](heart_stellarator.gif)
 
-The cut-away on the upper right shows the heart cross-section at the slice
-plane. The cross-sections plot shows how the heart morphs as you move
-through one half-field-period — the `n=1` twist rotates and deforms it.
+![Cross-sections](heart_cross_sections.png)
+
+The cut-away on the right of the title figure shows the heart cross-section
+at the slice plane. The cross-sections plot above shows how the heart
+morphs as you move through one half-field-period — the `n=1` twist rotates
+and deforms it.
 
 ## How it's built
 
 | File | Purpose |
 |---|---|
-| `heart_stellarator.py` | Designs the heart surface, optimizes coils, plots the static figures |
-| `heart_stellarator_gif.py` | Same pipeline + renders 48 rotation frames into a GIF |
-| `simple_plasma_coils.py` | Warm-up: 3-period rotating-ellipse plasma + coils |
-| `w7x_coil_optimization.py` | Stage-two coil optimization against the real W7-X boundary |
-| `Dockerfile` | Debian + gfortran/OpenMPI/netCDF/HDF5/LAPACK, SIMSOPT built from source |
-| `docker-compose.yml` | One service per script, working dir bind-mounted so PNGs land back on the host |
+| `heart_stellarator.py` | Designs the heart surface, optimizes coils, renders plots (and the GIF with `--gif`) |
+| `Dockerfile` | Debian-slim + C++ toolchain (gcc / cmake / ninja); SIMSOPT built from source |
+| `docker-compose.yml` | Two services (`heart`, `heart-gif`); working directory bind-mounted so outputs land on the host |
 
 `simsopt` is compiled from source (the PyPI aarch64 wheel uses CPU
 extensions Colima's VM doesn't expose); `pybind11` is pinned `<3` so the
@@ -48,9 +46,9 @@ vendored xtensor compiles.
 ## Run it
 
 ```bash
-docker compose build                          # one-time
-docker compose run --rm heart-stellarator     # static plots
-docker compose run --rm heart-gif             # rotating GIF
+docker compose build                  # one-time
+docker compose run --rm heart         # static plots
+docker compose run --rm heart-gif     # also write the rotating GIF
 ```
 
 Outputs land in the working directory:

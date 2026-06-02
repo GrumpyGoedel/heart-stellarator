@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Stellarator</title>
+<style>
+  :root {
+    --red:    #e63946;
+    --navy:   #1d3557;
+    --dark:   #7a0010;
+    --cream:  #fef8f7;
+    --paper:  #ffffff;
+    --ink:    #1b1b1f;
+    --muted:  #5a5a66;
+    --rule:   #ead7d5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--dark) 100%);
+    color: white;
+    padding: 4rem 1.5rem 3rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 .5rem;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header p {
+    margin: 0 auto;
+    max-width: 640px;
+    font-size: 1.1rem;
+    opacity: 0.92;
+  }
+  .repo-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: .55rem 1.2rem;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: white;
+    text-decoration: none;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    transition: background 0.15s ease;
+  }
+  .repo-link:hover { background: rgba(255,255,255,0.22); }
+  main {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  section { margin-bottom: 3rem; }
+  h2 {
+    font-size: 1.6rem;
+    color: var(--dark);
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: .4rem;
+    margin: 0 0 1rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin: 1.5rem 0 .5rem;
+  }
+  figure {
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(29, 53, 87, 0.12);
+    background: white;
+  }
+  figcaption {
+    margin-top: .6rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .equation {
+    background: var(--paper);
+    border-left: 4px solid var(--red);
+    padding: 1rem 1.2rem;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 1rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+  pre {
+    background: #1e1e24;
+    color: #f5f3ee;
+    padding: 1.1rem 1.2rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  pre code { font-family: "SF Mono", Menlo, Consolas, monospace; }
+  .kw  { color: #ff7b72; }
+  .str { color: #a5d6a7; }
+  .num { color: #f5c542; }
+  .cmt { color: #8b9aab; font-style: italic; }
+  .fn  { color: #82aaff; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .stat {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--red);
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+  }
+  .stat-label {
+    display: block;
+    margin-top: .2rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--rule);
+  }
+  footer a { color: var(--dark); }
+  p code, li code {
+    background: #f1e6e4;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Heart Stellarator</h1>
+  <p>A 2-field-period stellarator with the cross-section of a classical heart curve — designed analytically, then optimized with five modular coils until <code style="background:rgba(255,255,255,0.15);color:white;">⟨|B·n|/|B|⟩ ≈ 1%</code>.</p>
+  <a class="repo-link" href="https://github.com/GrumpyGoedel/heart-stellarator" target="_blank" rel="noopener">View on GitHub →</a>
+</header>
+
+<main>
+
+  <section>
+    <h2>Result</h2>
+    <figure>
+      <img src="heart_stellarator.gif" alt="Rotating 3D view of the heart stellarator">
+      <figcaption>Optimized plasma surface and the five modular coils per half-period, rotating through one full toroidal turn.</figcaption>
+    </figure>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">2</div>
+        <span class="stat-label">field periods</span>
+      </div>
+      <div class="stat">
+        <div class="stat-value">5</div>
+        <span class="stat-label">coils / half-period</span>
+      </div>
+      <div class="stat">
+        <div class="stat-value">~1%</div>
+        <span class="stat-label">⟨|B·n|/|B|⟩</span>
+      </div>
+      <div class="stat">
+        <div class="stat-value">1.0 m</div>
+        <span class="stat-label">major radius</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The idea</h2>
+    <p>The classical parametric heart curve</p>
+    <div class="equation">
+      x(t) = 16 sin³(t)<br>
+      y(t) = 13 cos t − 5 cos 2t − 2 cos 3t − cos 4t
+    </div>
+    <p>is <em>already</em> a finite Fourier series. Rotated 90° so the symmetry axis lies on the equatorial plane, it drops straight into a <code>SurfaceRZFourier</code> with no fitting — five <code>R<sub>m,0</sub></code> modes and two <code>Z<sub>m,0</sub></code> modes describe the shape exactly. A small <code>n=1</code> modulation adds the toroidal twist that turns this from a heart-tokamak into a real, non-axisymmetric stellarator.</p>
+
+    <figure>
+      <img src="heart_stellarator.png" alt="Full plasma surface and cut-away showing the heart cross-section">
+      <figcaption>Left: full plasma surface with the optimized coils. Right: a half-torus cut-away revealing the heart cross-section at the slice plane.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="heart_cross_sections.png" alt="Heart cross-sections at several toroidal angles">
+      <figcaption>The heart morphs as you move through one half-field-period — the <code>n=1</code> twist rotates and deforms it.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Key code</h2>
+
+    <h3>1 — Heart cross-section as a Fourier surface</h3>
+    <p>Coefficients come directly from the heart-curve harmonics; the last two lines add the toroidal twist.</p>
+<pre><code><span class="kw">def</span> <span class="fn">build_heart_surface</span>(nfp=<span class="num">2</span>, R0=<span class="num">1.0</span>, A=<span class="num">0.018</span>, twist=<span class="num">0.035</span>,
+                        nphi=<span class="num">48</span>, ntheta=<span class="num">48</span>):
+    s = SurfaceRZFourier(
+        nfp=nfp, stellsym=<span class="kw">True</span>, mpol=<span class="num">5</span>, ntor=<span class="num">2</span>,
+        quadpoints_phi=np.linspace(<span class="num">0</span>, <span class="num">1.0</span> / nfp, nphi, endpoint=<span class="kw">False</span>),
+        quadpoints_theta=np.linspace(<span class="num">0</span>, <span class="num">1.0</span>, ntheta, endpoint=<span class="kw">False</span>),
+    )
+    s.set_rc(<span class="num">0</span>, <span class="num">0</span>, R0)
+    s.set_rc(<span class="num">1</span>, <span class="num">0</span>,  A * <span class="num">13.0</span>)
+    s.set_rc(<span class="num">2</span>, <span class="num">0</span>, -A *  <span class="num">5.0</span>)
+    s.set_rc(<span class="num">3</span>, <span class="num">0</span>, -A *  <span class="num">2.0</span>)
+    s.set_rc(<span class="num">4</span>, <span class="num">0</span>, -A *  <span class="num">1.0</span>)
+    s.set_zs(<span class="num">1</span>, <span class="num">0</span>,  A * <span class="num">12.0</span>)
+    s.set_zs(<span class="num">3</span>, <span class="num">0</span>, -A *  <span class="num">4.0</span>)
+    s.set_rc(<span class="num">1</span>, <span class="num">1</span>,  twist)   <span class="cmt"># n=1 modulation — turns heart-tokamak</span>
+    s.set_zs(<span class="num">1</span>, <span class="num">1</span>, -twist)   <span class="cmt"># into a real stellarator</span>
+    <span class="kw">return</span> s</code></pre>
+
+    <h3>2 — Coil optimization (L-BFGS-B against the surface)</h3>
+    <p>Squared normal-flux objective plus regularizers on coil length, curvature, arclength variation, and coil-coil distance.</p>
+<pre><code>base_curves = create_equally_spaced_curves(
+    ncoils, s.nfp, stellsym=<span class="kw">True</span>, R0=R0, R1=R1, order=order)
+base_currents = [Current(current) <span class="kw">for</span> _ <span class="kw">in</span> range(ncoils)]
+base_currents[<span class="num">0</span>].fix_all()
+coils = coils_via_symmetries(base_curves, base_currents, s.nfp, <span class="kw">True</span>)
+bs = BiotSavart(coils)
+bs.set_points(s.gamma().reshape((-<span class="num">1</span>, <span class="num">3</span>)))
+
+Jf   = SquaredFlux(s, bs)
+Jls  = [CurveLength(c) <span class="kw">for</span> c <span class="kw">in</span> base_curves]
+Jcs  = sum(LpCurveCurvature(c, p=<span class="num">2</span>, threshold=<span class="num">25.0</span>) <span class="kw">for</span> c <span class="kw">in</span> base_curves)
+Jmsc = sum(MeanSquaredCurvature(c) <span class="kw">for</span> c <span class="kw">in</span> base_curves)
+Jarc = sum(ArclengthVariation(c) <span class="kw">for</span> c <span class="kw">in</span> base_curves)
+Jdist = CurveCurveDistance(base_curves, <span class="num">0.12</span>)
+JF = (Jf
+      + <span class="num">5e-4</span> * sum(QuadraticPenalty(Jl, <span class="num">3.0</span>, <span class="str">"max"</span>) <span class="kw">for</span> Jl <span class="kw">in</span> Jls)
+      + <span class="num">1e-7</span> * Jcs + <span class="num">1e-8</span> * Jmsc + <span class="num">1e-4</span> * Jarc + <span class="num">5e-2</span> * Jdist)
+
+res = minimize(fun, JF.x, jac=<span class="kw">True</span>, method=<span class="str">"L-BFGS-B"</span>,
+               options={<span class="str">"maxiter"</span>: <span class="num">800</span>, <span class="str">"maxcor"</span>: <span class="num">300</span>,
+                        <span class="str">"gtol"</span>: <span class="num">1e-12</span>, <span class="str">"ftol"</span>: <span class="num">1e-14</span>})</code></pre>
+
+    <h3>3 — Run it</h3>
+<pre><code><span class="cmt"># build once, then:</span>
+docker compose run --rm heart        <span class="cmt"># static plots</span>
+docker compose run --rm heart-gif    <span class="cmt"># also write the rotating GIF</span></code></pre>
+  </section>
+
+  <section>
+    <h2>How it's built</h2>
+    <ul>
+      <li><code>heart_stellarator.py</code> — designs the heart surface, optimizes coils, renders plots (and the GIF with <code>--gif</code>)</li>
+      <li><code>Dockerfile</code> — Debian-slim + C++ toolchain (gcc / cmake / ninja); SIMSOPT built from source</li>
+      <li><code>docker-compose.yml</code> — two services (<code>heart</code>, <code>heart-gif</code>); working directory bind-mounted so outputs land on the host</li>
+    </ul>
+    <p><code>simsopt</code> is compiled from source (the PyPI aarch64 wheel uses CPU extensions Colima's VM doesn't expose); <code>pybind11</code> is pinned <code>&lt;3</code> so the vendored xtensor compiles.</p>
+  </section>
+
+</main>
+
+<footer>
+  Source: <a href="https://github.com/GrumpyGoedel/heart-stellarator" target="_blank" rel="noopener">github.com/GrumpyGoedel/heart-stellarator</a>
+  &nbsp;·&nbsp; Built with <a href="https://simsopt.readthedocs.io/" target="_blank" rel="noopener">SIMSOPT</a>
+</footer>
+
+</body>
+</html>
